@@ -115,7 +115,7 @@ def clean_customers(df):
 
     cleaned=(
         base_cleaning(df)\
-        .withColumn("credit_term", regexp_replace("credit_term", payment_due, "").cast("int"))
+        .withColumn("credit_term", regexp_replace("credit_terms", payment_due, "").cast("int"))
         .withColumn("credit_limit", regexp_replace(col("credit_limit"), r"[^\d\.]", ""))
         .withColumn("credit_limit", when(col("credit_limit").isNotNull(), col("credit_limit").cast(DoubleType()))
         .otherwise(None))
@@ -129,6 +129,7 @@ def clean_products(df):
 
     cleaned=(
         base_cleaning(df)\
+        .withColumn("shelf_life_days", col("shelf_life_days").cast("int"))\
         .withColumn("is_fragile", when(col("is_fragile").cast(IntegerType())==1, True).otherwise(False))\
         .withColumn("is_temperature_controlled", when(col("is_temperature_controlled").cast(IntegerType())==1, True).otherwise(False))\
         .withColumn("is_active", when(col("is_active").cast(IntegerType())==1, True).otherwise(False))

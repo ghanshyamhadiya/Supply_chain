@@ -50,16 +50,19 @@ Inventory_snapshot_schema=StructType([
 ])
 
 Orders_schema=StructType([
+    StructField("order_id", StringType(), False),
     StructField("customer_id", StringType(), False),
     StructField("supplier_id", StringType(), False),
+    StructField("product_id", StringType(), False),
     StructField("warehouse_id", StringType(), False),
     StructField("order_date", TimestampType(), True),
     StructField("required_delivery", TimestampType(), True),
-    StructField("product_category", StringType(), True),
+    StructField("sales_channel", StringType(), True),
     StructField("quantity_ordered", IntegerType(), True),
     StructField("unit_price", DoubleType(), False),
     StructField("order_value", DoubleType(), True),
     StructField("priority", StringType(), True),
+    StructField("discount_pct", IntegerType(), True),
     StructField("payment_status", StringType(), True),
     StructField("order_status", StringType(), True)
 ])
@@ -67,6 +70,7 @@ Orders_schema=StructType([
 Shipment_schema=StructType([
     StructField("shipment_id", StringType(), False),
     StructField("order_id", StringType(), False),
+    StructField("supplier_id", StringType(), False),
     StructField("warehouse_id", StringType(), False),
     StructField("carrier_id", StringType(), False),
     StructField("product_category", StringType(), True),
@@ -134,6 +138,6 @@ Products_schema=StructType([
     StructField("weight_kg", DoubleType(), True),
     StructField("is_fragile", BooleanType(), True),
     StructField("is_temperature_controlled", BooleanType(), True),
-    StructField("shelf_life_days", BooleanType(), True),
+    StructField("shelf_life_days", IntegerType(), True),
     StructField("is_active", BooleanType( ), True)
 ])

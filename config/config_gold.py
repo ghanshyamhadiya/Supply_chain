@@ -1,13 +1,12 @@
-
 SILVER_PATH={
     "orders": "/Volumes/workspace/default/supplychain/silver_data/orders/",
     "shipments": "/Volumes/workspace/default/supplychain/silver_data/shipments/",
     "warehouses": "/Volumes/workspace/default/supplychain/silver_data/warehouses/",
     "carriers": "/Volumes/workspace/default/supplychain/silver_data/carriers/",
     "suppliers": "/Volumes/workspace/default/supplychain/silver_data/suppliers/",
-    "inventory_snapshot": "/Volumes/workspace/default/supplychain/silver_data/inventory_snapshot",
-    "products": "/Volumes/workspace/default/supplychain/silver_data/products",
-    "customers": "/Volumes/workspace/default/supplychain/silver_data/customers"
+    "inventory_snapshot": "/Volumes/workspace/default/supplychain/silver_data/inventory_snapshot/",
+    "products": "/Volumes/workspace/default/supplychain/silver_data/products/",
+    "customers": "/Volumes/workspace/default/supplychain/silver_data/customers/"
 }
 
 REQUIRE_TABLES = {
@@ -24,14 +23,12 @@ REQUIRE_TABLES = {
 OPTIONAL_SOURCE = {
 }
 
-
-
-
 GOLD_CONFIG = {
 
     "fact_order": {
         "source": "orders",
         "key": ["order_id"],
+        "load_type": "INCREMENTAL",
         "required": True,
         "columns": [
             "order_id",
@@ -51,6 +48,7 @@ GOLD_CONFIG = {
     "dim_warehouse": {
         "source": "warehouses",
         "key": ["warehouse_id"],
+        "load_type": "FULL",
         "required": True,
         "columns": [
             "warehouse_id",
@@ -70,6 +68,7 @@ GOLD_CONFIG = {
     "fact_shipment": {
         "source": "shipments",
         "key": ["shipment_id"],
+        "load_type": "INCREMENTAL",
         "required": True,
         "columns": [
             "shipment_id",
@@ -77,7 +76,6 @@ GOLD_CONFIG = {
             "warehouse_id",
             "supplier_id",
             "carrier_id",
-            "product_category",
             "shipment_date",
             "expected_delivery",
             "actual_delivery",
@@ -100,6 +98,7 @@ GOLD_CONFIG = {
     "dim_supplier": {
         "source": "suppliers",
         "key": ["supplier_id"],
+        "load_type": "FULL",
         "required": True,
         "columns": [
             "supplier_id",
@@ -121,12 +120,13 @@ GOLD_CONFIG = {
 
     "fact_inventory_snapshot": {
         "source": "inventory_snapshot",
-        "key": ["inventory_id", "snapshot_date"],
-        "required": False,
+        "key": ["product_id", "warehouse_id", "snapshot_date"],
+        "load_type": "INCREMENTAL",
+        "required": True,
         "columns": [
             "inventory_id",
             "warehouse_id",
-            "product_category",
+            "product_id",
             "sku_code",
             "quantity_on_hand",
             "quantity_reserved",
@@ -145,6 +145,7 @@ GOLD_CONFIG = {
     "dim_customer": {
         "source": "customers",
         "key": ["customer_id"],
+        "load_type": "INCREMENTAL",
         "required": True,
         "columns": [
             "customer_id",
@@ -155,15 +156,16 @@ GOLD_CONFIG = {
             "state",
             "region",
             "credit_term",
-            "credit_due",
             "credit_limit",
-            "is_active"
+            "is_active",
+            "created_at"
         ],
     },
 
     "dim_product": {
         "source": "products",
         "key": ["product_id"],
+        "load_type": "FULL",
         "required": True,
         "columns": [
             "product_id",
@@ -185,6 +187,7 @@ GOLD_CONFIG = {
     "dim_carrier": {
         "source": "carriers",
         "key": ["carrier_id"],
+        "load_type": "FULL",
         "required": True,
         "columns": [
             "carrier_id",

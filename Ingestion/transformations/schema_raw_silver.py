@@ -32,34 +32,11 @@ Warehouse_schema=StructType([
     StructField("file_date", StringType(), True)
 ])
 
-Inventory_schema=StructType([
-    StructField("inventory_id", StringType(), False),
-    StructField("warehouse_id", StringType(), False),
-    StructField("sku_code", StringType(), True),
-    StructField("product_category", StringType(), True),
-    StructField("quantity_on_hand", IntegerType(), True),
-    StructField("quantity_reserved", IntegerType(), True),
-    StructField("quantity_available", IntegerType(), True),
-    StructField("reorder_point", IntegerType(), True),
-    StructField("unit_cost", DoubleType(), True),
-    StructField("total_inventory_value", DoubleType(), True),
-    StructField("last_replenishment_date", TimestampType(), True),
-    StructField("snapshot_date", TimestampType(), True),
-    StructField("is_below_reorder", BooleanType(), True),
-    StructField("calculated_quantity_available", IntegerType(), True),
-    StructField("final_quantity_available", IntegerType(), True),
-    StructField("calculated_inventory_value", DoubleType(), True),
-    StructField("quantity_status", StringType(), True),
-    StructField("created_at", TimestampType(), True),
-    StructField("load_date", DateType(), True),
-    StructField("file_date", StringType(), True)
-])
-
 Inventory_snapshot_schema=StructType([
     StructField("inventory_id", StringType(), False),
     StructField("warehouse_id", StringType(), False),
+    StructField("product_id", StringType(), True),
     StructField("sku_code", StringType(), True),
-    StructField("product_category", StringType(), True),
     StructField("quantity_on_hand", IntegerType(), True),
     StructField("quantity_reserved", IntegerType(), True),
     StructField("quantity_available", IntegerType(), True),
@@ -69,10 +46,6 @@ Inventory_snapshot_schema=StructType([
     StructField("last_replenishment_date", TimestampType(), True),
     StructField("snapshot_date", TimestampType(), True),
     StructField("is_below_reorder", BooleanType(), True),
-    StructField("calculated_quantity_available", IntegerType(), True),
-    StructField("final_quantity_available", IntegerType(), True),
-    StructField("calculated_inventory_value", DoubleType(), True),
-    StructField("quantity_status", StringType(), True),
     StructField("created_at", TimestampType(), True),
     StructField("load_date", DateType(), True),
     StructField("file_date", StringType(), True)
@@ -86,7 +59,6 @@ Orders_schema=StructType([
     StructField("product_id", StringType(), True),
     StructField("order_date", StringType(), True),
     StructField("required_delivery", StringType(), True),
-    StructField("product_category", StringType(), True),
     StructField("quantity_ordered", IntegerType(), True),
     StructField("unit_price", DoubleType(), False),
     StructField("order_value", DoubleType(), True),
@@ -107,7 +79,6 @@ Shipment_schema=StructType([
     StructField("warehouse_id", StringType(), False),
     StructField("carrier_id", StringType(), False),
     StructField("product_id", StringType(), True),
-    StructField("product_category", StringType(), True),
     StructField("shipment_date", StringType(), True),
     StructField("expected_delivery", StringType(), True),
     StructField("actual_delivery", StringType(), True),
@@ -141,7 +112,6 @@ Supplier_schema=StructType([
     StructField("contract_end", TimestampType(), True),
     StructField("payment_terms", StringType(), True),
     StructField("is_active", BooleanType(), True),
-    StructField("payment_due", IntegerType(), True),
     StructField("created_at", TimestampType(), True),
     StructField("load_date", DateType(), True),
     StructField("file_date", StringType(), True)
@@ -155,9 +125,9 @@ Customer_schema=StructType([
     StructField("city", StringType(), True),
     StructField("state", StringType(), True),
     StructField("region", StringType(), True),
-    StructField("credit_term", IntegerType(), True),
-    StructField("credit_due", IntegerType(), True),
-    StructField("credit_limit", IntegerType(), True),
+    StructField("credit_terms", StringType(), True),
+    StructField("credit_limit", StringType(), True),
+    StructField("onboarding_date", StringType(), True),
     StructField("is_active", BooleanType(), True),
     StructField("created_at", TimestampType(), True),
     StructField("load_date", DateType(), True),
@@ -175,7 +145,9 @@ Products_schema=StructType([
     StructField("weight_kg", DoubleType(), True),
     StructField("is_fragile", BooleanType(), True),
     StructField("is_temperature_controlled", BooleanType(), True),
-    StructField("shelf_life_days", IntegerType(), True),
+    StructField("shelf_life_days", DoubleType(), True),
     StructField("is_active", BooleanType(), True),
     StructField("created_at", TimestampType(), True)
 ])
+
+Inventory_schema = Inventory_snapshot_schema
