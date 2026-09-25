@@ -1,4 +1,4 @@
-    # Supply Chain Data Pipeline
+#Supply Chain Data Pipeline
 
 ![Databricks](https://img.shields.io/badge/Databricks-FF3621?style=flat-square&logo=databricks&logoColor=white)
 ![PySpark](https://img.shields.io/badge/PySpark-E25A1C?style=flat-square&logo=apachespark&logoColor=white)
